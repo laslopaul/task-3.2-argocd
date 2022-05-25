@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    notifications.argoproj.io/subscribe.on-deployed.telegram: USERNAME_OF_YOUR_CHANNEL
+    notifications.argoproj.io/subscribe.on-sync-failed.telegram: USERNAME_OF_YOUR_CHANNEL
+    notifications.argoproj.io/subscribe.on-sync-running.telegram: USERNAME_OF_YOUR_CHANNEL
+    notifications.argoproj.io/subscribe.on-sync-succeeded.telegram: USERNAME_OF_YOUR_CHANNEL
+  name: wordpress
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: helm
+    repoURL: https://github.com/laslopaul/wordpress-chart.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated: {}
